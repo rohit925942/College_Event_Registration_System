@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Register — Campus Noticeboard{% endblock %}
+
+{% block extra_style %}
+<style>
+    .form-wrap{ max-width: 420px; margin: 0 auto; }
+    .form-wrap h1{ font-size: 30px; text-align: center; }
+    .form-wrap .lede{ text-align: center; margin: 0 auto 28px; }
+    .switch-line{
+        text-align: center;
+        font-size: 13.5px;
+        margin-top: 18px;
+        color: #4b5266;
+    }
+    .switch-line a{ color: var(--mustard-deep); font-weight: 600; text-decoration: none; }
+    .switch-line a:hover{ text-decoration: underline; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="form-wrap">
+    <h1>Create your account</h1>
+    <p class="lede">Sign up once, then register for any event on campus.</p>
+
+    <div class="pin-card">
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="field-group">
+                <label for="name">Full name</label>
+                <input type="text" id="name" name="name" placeholder="Your name" required>
+            </div>
+
+            <div class="field-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="you@college.edu" required>
+            </div>
+
+            <div class="field-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Choose a password" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">Register</button>
+        </form>
+    </div>
+
+    <p class="switch-line">Already have an account? <a href="{% url 'login' %}">Login instead</a></p>
+</div>
+{% endblock %}

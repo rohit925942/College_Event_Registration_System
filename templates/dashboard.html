@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — Campus Noticeboard{% endblock %}
+
+{% block extra_style %}
+<style>
+    .stat-row{
+        display: flex;
+        gap: 20px;
+        margin: 32px 0 40px;
+        flex-wrap: wrap;
+    }
+    .stat{
+        flex: 1 1 200px;
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 3px;
+        padding: 24px 22px;
+    }
+    .stat-label{
+        font-size: 13px;
+        color: var(--evergreen);
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+    .stat-num{
+        font-family: 'Fraunces', serif;
+        font-size: 42px;
+        font-weight: 600;
+        line-height: 1;
+    }
+    .action-row{
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<h1>Your dashboard</h1>
+<p class="lede">A quick look at what's happening on campus right now.</p>
+
+<div class="stat-row">
+    <div class="stat">
+        <div class="stat-label">Total events</div>
+        <div class="stat-num">{{ total_events }}</div>
+    </div>
+    <div class="stat">
+        <div class="stat-label">Total registrations</div>
+        <div class="stat-num">{{ total_registrations }}</div>
+    </div>
+</div>
+
+<div class="action-row">
+    <a class="btn btn-primary" href="{% url 'events' %}">View events</a>
+    <a class="btn btn-ghost" href="{% url 'my_events' %}">My events</a>
+    <a class="btn btn-danger" href="{% url 'logout' %}">Logout</a>
+</div>
+
+{% endblock %}

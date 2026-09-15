@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}My Events — Campus Noticeboard{% endblock %}
+
+{% block extra_style %}
+<style>
+    .stub-list{ display: flex; flex-direction: column; gap: 14px; margin-top: 28px; }
+    .stub{
+        display: flex;
+        align-items: center;
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 3px;
+        padding: 16px 18px;
+        position: relative;
+    }
+    .stub::before{
+        content: "";
+        width: 4px;
+        align-self: stretch;
+        background: repeating-linear-gradient(180deg, var(--mustard) 0 6px, transparent 6px 12px);
+        margin-right: 16px;
+    }
+    .stub h3{ font-size: 17px; margin-bottom: 2px; }
+    .stub-date{ font-size: 13px; color: var(--evergreen); font-weight: 600; }
+
+    .empty-state{
+        border: 1px dashed var(--line);
+        border-radius: 3px;
+        padding: 40px;
+        text-align: center;
+        color: #6b7280;
+        margin-top: 24px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<h1>My registered events</h1>
+<p class="lede">Everything you've signed up for so far.</p>
+
+{% if registrations %}
+<div class="stub-list">
+{% for reg in registrations %}
+    <div class="stub">
+        <div>
+            <h3>{{ reg.event.event_name }}</h3>
+            <div class="stub-date">{{ reg.event.event_date|date:"D, d M Y" }} &middot; {{ reg.event.venue }}</div>
+        </div>
+    </div>
+{% endfor %}
+</div>
+{% else %}
+<div class="empty-state">You haven't registered for any events yet — <a href="{% url 'events' %}">browse what's on</a>.</div>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %}{{ title|default:"Notice" }} — Campus Noticeboard{% endblock %}
+
+{% block extra_style %}
+<style>
+    .msg-wrap{ max-width: 420px; margin: 40px auto 0; text-align: center; }
+
+    .msg-card{
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 3px;
+        padding: 36px 30px 30px;
+        position: relative;
+        box-shadow: 0 10px 24px rgba(32, 42, 68, 0.10);
+    }
+    .msg-card::before{
+        content: "";
+        position: absolute;
+        top: -8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: {% if status == "error" %}var(--danger){% else %}var(--evergreen){% endif %};
+        box-shadow: 0 2px 4px rgba(0,0,0,0.25);
+    }
+
+    .msg-icon{
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        margin: 0 auto 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Fraunces', serif;
+        font-size: 22px;
+        font-weight: 700;
+        color: #fff;
+        background: {% if status == "error" %}var(--danger){% else %}var(--evergreen){% endif %};
+    }
+
+    .msg-card h1{
+        font-size: 22px;
+        margin-bottom: 8px;
+    }
+
+    .msg-card p{
+        font-size: 14.5px;
+        color: #4b5266;
+        margin: 0 0 24px;
+    }
+
+    .msg-actions{
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="msg-wrap">
+    <div class="msg-card">
+        <div class="msg-icon">{% if status == "error" %}!{% else %}&#10003;{% endif %}</div>
+        <h1>{{ title }}</h1>
+        <p>{{ message }}</p>
+        <div class="msg-actions">
+            {% if primary_url %}
+                <a class="btn btn-primary" href="{{ primary_url }}">{{ primary_label }}</a>
+            {% endif %}
+            {% if secondary_url %}
+                <a class="btn btn-ghost" href="{{ secondary_url }}">{{ secondary_label }}</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

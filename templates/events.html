@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block title %}Events — Campus Noticeboard{% endblock %}
+
+{% block extra_style %}
+<style>
+    .search-row{
+        display: flex;
+        gap: 10px;
+        margin: 24px 0 36px;
+        max-width: 420px;
+    }
+    .search-row input{ flex: 1; }
+
+    .event-grid{
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 22px;
+    }
+
+    .event-card{
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 3px;
+        overflow: hidden;
+        display: flex;
+    }
+
+    .event-date{
+        background: var(--ink);
+        color: var(--card);
+        width: 64px;
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Fraunces', serif;
+        padding: 10px 0;
+    }
+    .event-date .day{ font-size: 24px; font-weight: 700; line-height: 1; }
+    .event-date .rest{ font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.04em; margin-top: 4px; text-align: center; }
+
+    .event-body{ padding: 18px 18px 18px 16px; flex: 1; }
+    .event-body h3{ font-size: 18px; margin-bottom: 4px; }
+    .event-venue{ font-size: 12.5px; color: var(--evergreen); font-weight: 600; margin-bottom: 8px; }
+    .event-desc{ font-size: 13.5px; color: #5a5f52; margin: 0 0 14px; }
+
+    .empty-state{
+        border: 1px dashed var(--line);
+        border-radius: 3px;
+        padding: 40px;
+        text-align: center;
+        color: #6b7280;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<h1>Available events</h1>
+<p class="lede">Search by name, or browse everything that's open for registration.</p>
+
+<form method="GET" class="search-row">
+    <input type="text" name="search" placeholder="Search events" value="{{ request.GET.search }}">
+    <button type="submit" class="btn btn-ghost">Search</button>
+</form>
+
+{% if events %}
+<div class="event-grid">
+{% for event in events %}
+    <div class="event-card">
+        <div class="event-date">
+            <span class="day">{{ event.event_date|date:"d" }}</span>
+            <span class="rest">{{ event.event_date|date:"M Y" }}</span>
+        </div>
+        <div class="event-body">
+            <h3>{{ event.event_name }}</h3>
+            <div class="event-venue">{{ event.venue }}</div>
+            <p class="event-desc">{{ event.description }}</p>
+            <a class="btn btn-primary" href="{% url 'join_event' event.id %}">Register</a>
+        </div>
+    </div>
+{% endfor %}
+</div>
+{% else %}
+<div class="empty-state">No events match your search yet.</div>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% block title %}Campus Noticeboard{% endblock %}
+
+{% block     extra_style %}
+<style>
+    .board{
+        background: var(--cork);
+        border-radius: 6px;
+        padding: 56px 40px;
+        position: relative;
+        overflow: hidden;
+    }
+    .board::before{
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(rgba(0,0,0,0.08) 1px, transparent 1px);
+        background-size: 10px 10px;
+        opacity: 0.5;
+    }
+    .board-inner{ position: relative; }
+    .board h1{
+        color: #fff8ea;
+        font-size: 40px;
+        max-width: 14ch;
+    }
+    .board .lede{ color: #f1e4cc; }
+
+    .notice-row{
+        display: flex;
+        gap: 20px;
+        margin-top: 40px;
+        flex-wrap: wrap;
+    }
+
+    .notice{
+        background: var(--card);
+        flex: 1 1 200px;
+        padding: 26px 20px 22px;
+        border-radius: 3px;
+        box-shadow: 0 12px 20px rgba(0,0,0,0.22);
+        position: relative;
+        text-decoration: none;
+        color: var(--ink);
+        display: block;
+    }
+    .notice:nth-child(1){ transform: rotate(-2deg); }
+    .notice:nth-child(2){ transform: rotate(1.2deg); }
+    .notice:nth-child(3){ transform: rotate(-0.8deg); }
+
+    .notice::before{
+        content: "";
+        position: absolute;
+        top: -7px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--mustard);
+        box-shadow: 0 2px 3px rgba(0,0,0,0.3);
+    }
+
+    .notice-eyebrow{
+        font-size: 12px;
+        color: var(--evergreen);
+        font-weight: 600;
+        margin-bottom: 6px;
+    }
+    .notice h3{ font-size: 20px; margin-bottom: 6px; }
+    .notice p{ font-size: 13.5px; color: #5a5f52; margin: 0; }
+
+    .why-row{
+        display: flex;
+        gap: 32px;
+        margin-top: 48px;
+        flex-wrap: wrap;
+    }
+    .why-item{ flex: 1 1 220px; }
+    .why-item h3{ font-size: 17px; margin-bottom: 6px; }
+    .why-item p{ font-size: 14px; color: #4b5266; margin: 0; }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="board">
+    <div class="board-inner">
+        <h1>Everything your campus is doing, pinned in one place.</h1>
+        <p class="lede">Browse workshops, fests and talks happening across departments, and keep track of what you've signed up for.</p>
+
+        <div class="notice-row">
+            <a class="notice" href="{% url 'register' %}">
+                <div class="notice-eyebrow">New here</div>
+                <h3>Register</h3>
+                <p>Create a student account in under a minute.</p>
+            </a>
+            <a class="notice" href="{% url 'login' %}">
+                <div class="notice-eyebrow">Returning</div>
+                <h3>Login</h3>
+                <p>Get to your dashboard and registrations.</p>
+            </a>
+            <a class="notice" href="{% url 'events' %}">
+                <div class="notice-eyebrow">Browse</div>
+                <h3>View events</h3>
+                <p>See what's coming up and reserve your spot.</p>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="why-row">
+    <div class="why-item">
+        <h3>One list, not five WhatsApp groups</h3>
+        <p>Every department event lands in the same place, searchable by name.</p>
+    </div>
+    <div class="why-item">
+        <h3>No double-booking</h3>
+        <p>Once you're registered for an event, we keep track so you don't sign up twice.</p>
+    </div>
+    <div class="why-item">
+        <h3>Your own dashboard</h3>
+        <p>See everything you've joined and how many events are running, at a glance.</p>
+    </div>
+</div>
+
+{% endblock %}
